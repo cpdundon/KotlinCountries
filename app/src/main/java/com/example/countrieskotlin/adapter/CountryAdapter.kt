@@ -31,11 +31,10 @@ class CountryAdapter(countries: List<Country>) :
         holder.setCountry(country)
     }
 
-    class CountryViewHolder(binding: CountryCardBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        private val binding: CountryCardBinding = binding
+    class CountryViewHolder(private val binding: CountryCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setCountry(country: Country) {
-            val imgFlag: ImageView = binding.ivFlag
+
+            val imgFlag = binding.ivFlag
             val requestBuilder = GlideToVectorYou
                 .init()
                 .with(binding.root.context)
@@ -44,8 +43,7 @@ class CountryAdapter(countries: List<Country>) :
                 .load(country.flag)
                 .into(imgFlag)
 
-            //Glide.with(this.itemView).load(country.getFlag()).into(imgFlag);
-            binding.tvCountryName.setText(country.name)
+            binding.tvCountryName.text = country.name
             setListeners(country)
         }
 
