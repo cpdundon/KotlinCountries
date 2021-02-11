@@ -5,7 +5,7 @@ import com.example.countrieskotlin.repo.remote.JokesRetroInstance
 import retrofit2.Response
 
 object JokesRepo {
-        suspend fun getJokes(amount: Int, type: String) : Response<Jokes> {
-                return JokesRetroInstance.jokesService.getJokes(amount, type)
+        suspend fun getJokes(amount: Int, type: String, category: String) : Response<Jokes> {
+                return JokesRetroInstance.jokesService.getJokes(category, amount, type)
         }
 }

@@ -2,7 +2,9 @@ package com.example.countrieskotlin.model
 
 
 import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
+@Serializable
 @JsonClass(generateAdapter = true)
 data class Joke(
         val category: String?,

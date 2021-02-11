@@ -26,9 +26,16 @@ class JokesViewModel : ViewModel() {
     val jokes: LiveData<Jokes>
         get() = _jokes
 
-    fun fetchJokes(amount: Int, type: String) {
+    fun fetchJokes(amount: Int, type: String, category: String) {
+        var _amount = amount;
+        if (_amount > 10) {
+            _amount = 10
+        } else if (_amount < 1) {
+            _amount = 1
+        }
+
         viewModelScope.launch(Dispatchers.Main) {
-        val jokes = JokesRepo.getJokes(amount, type)
+        val jokes = JokesRepo.getJokes(_amount, type, category)
             _jokes.value = jokes.body()
         }
     }

@@ -3,7 +3,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnFetch"
+        android:orientation="vertical">
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rdo_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dark"
+            android:textAppearance="?textAppearanceHeadline6"
+            android:focusedByDefault="true"
+            />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rdo_program"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Programming"
+            android:textAppearance="?textAppearanceHeadline6"
+            android:focusedByDefault="false"
+            />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rdo_misc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Misc"
+            android:textAppearance="?textAppearanceHeadline6"
+            android:focusedByDefault="false"
+            />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rdo_pun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pun"
+            android:textAppearance="?textAppearanceHeadline6"
+            android:focusedByDefault="false"
+            />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rdo_spooky"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Spooky"
+            android:textAppearance="?textAppearanceHeadline6"
+            android:focusedByDefault="false"
+            />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rdo_Christmas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Christmas"
+            android:textAppearance="?textAppearanceHeadline6"
+            android:focusedByDefault="false"
+            />
+    </RadioGroup>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnFetch"
         android:layout_width="match_parent"

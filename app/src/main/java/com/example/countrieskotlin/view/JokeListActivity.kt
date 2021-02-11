@@ -12,15 +12,18 @@ import com.example.countrieskotlin.adapter.JokesAdapter
 import com.example.countrieskotlin.databinding.JokeListBinding
 import com.example.countrieskotlin.model.Jokes
 import com.example.countrieskotlin.viewModel.JokesViewModel
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerializationStrategy
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.Json.Default.decodeFromString
+import kotlinx.serialization.json.Json.Default.encodeToString
 
 class JokeListActivity : AppCompatActivity() {
     // leverages lazy and extension functions to create viwemodel
     private val viewModel by viewModels<JokesViewModel>()
 
-    // In kotlin declarations must have a default value
-    // To be able to create a Top-Level Declaration with no init value we use [lateinit]
-    // contract with compiler that says we promise to initialize this variable before we use it
     private lateinit var binding: JokeListBinding
+    private var gridToggle = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,26 +35,29 @@ class JokeListActivity : AppCompatActivity() {
             Toast.makeText(this, "List size is ${jokes.jokes?.size}", Toast.LENGTH_SHORT).show()
         }
 
-//        setUpListeners()
+        setUpListeners()
         setUpObservers()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.fetchJokes(8,"twopart")
-        setGridLayoutMgr(false)
+
+        val fromMain = intent.getBooleanExtra("FROM_MAIN", false)
+        val category = intent.getStringExtra("JOKE_CATEGORY")?: "Any"
+        if (fromMain) {
+            viewModel.fetchJokes(10, "twopart", category)
+            intent.putExtra("FROM_MAIN", !fromMain)
+            setGridLayoutMgr()
+        } else {
+            val jokesAdapter = JokesAdapter(viewModel.jokes.value!!)
+            binding.rvJokeList.adapter = jokesAdapter
+        }
     }
 
     private fun setUpListeners() {
-//        binding.btnFetch.setOnClickListener(View.OnClickListener { reload() })
-
-//        binding.etQuery.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-//            if (keyCode == 66) {
-//                reload()
-//                return@OnKeyListener true
-//            }
-//            false
-//        })
+            binding.btnLayout.setOnClickListener(View.OnClickListener {
+            setGridLayoutMgr()
+        })
     }
 
     private fun setUpObservers() {
@@ -62,13 +68,14 @@ class JokeListActivity : AppCompatActivity() {
             })
     }
 
-    private fun setGridLayoutMgr(grid: Boolean) {
-        if (grid) {
+    private fun setGridLayoutMgr() {
+        if (gridToggle) {
             val gridLayoutManager = GridLayoutManager(this, 3)
             binding.rvJokeList.layoutManager = gridLayoutManager
         } else {
             val linearLayoutManager = LinearLayoutManager(this)
             binding.rvJokeList.layoutManager = linearLayoutManager
         }
+        gridToggle = !gridToggle
     }
 }

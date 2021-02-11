@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    //id 'org.jetbrains.kotlin.multiplatform' //version '1.4.10'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.10'
 }
 
 android {
@@ -55,6 +57,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // CPD ADD
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0-RC")
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // glide-recyclereview

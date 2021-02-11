@@ -27,17 +27,43 @@ class MainJokes : AppCompatActivity() {
         setUpListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.rdoDark.isSelected = true
+    }
+
     private fun setUpListeners() {
-        binding.btnFetch.setOnClickListener(View.OnClickListener { openJokeList() })
+        binding.btnFetch.setOnClickListener(View.OnClickListener {
+            openJokeList()
+            true
+        })
     }
 
     private fun openJokeList() {
+        val category = when {
+            binding.rdoChristmas.isChecked -> {
+                "Christmas"
+            }
+            binding.rdoMisc.isChecked -> {
+                "Miscellaneous"
+            }
+            binding.rdoProgram.isChecked -> {
+                "Programming"
+            }
+            binding.rdoPun.isChecked -> {
+                "Pun"
+            }
+            binding.rdoSpooky.isChecked -> {
+                "Spooky"
+            }
+            else -> {
+                "Dark"
+            }
+        }
+
         intent = Intent(this, JokeListActivity::class.java)
-        intent.putExtra("TEST", "BUTTON TEST")
+        intent.putExtra("JOKE_CATEGORY", category)
+        intent.putExtra("FROM_MAIN", true)
         startActivity(intent)
-//            intent.putExtra(Constants.INTENT_KEY_PHOTOGRAPHER, photo.photographer)
-//            intent.putExtra(Constants.INTENT_KEY_PHOTOGRAPHER_URL, photo.photographer_url)
-//
-        //binding.root.context.startActivity(intent)
     }
 }

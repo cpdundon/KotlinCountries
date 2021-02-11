@@ -1,9 +1,10 @@
 package com.example.countrieskotlin.model
 
 
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
+@Serializable
 @JsonClass(generateAdapter = true)
 data class Flags(
     val nsfw: Boolean?,

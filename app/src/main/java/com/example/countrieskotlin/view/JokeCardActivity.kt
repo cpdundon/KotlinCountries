@@ -1,7 +1,8 @@
 package com.example.countrieskotlin.view
 
-import android.content.Intent
+import android.R
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.countrieskotlin.databinding.JokeCardBinding
 
@@ -21,9 +22,18 @@ class JokeCardActivity : AppCompatActivity() {
             setContentView(it.root)
         }
 
-        //intent = Intent(this, JokesAdapter::class.java)
         binding.tvSetup.text = intent.getStringExtra("SETUP")
         binding.tvDelivery.text = intent.getStringExtra("DELIVERY")
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
