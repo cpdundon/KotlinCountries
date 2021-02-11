@@ -26,10 +26,6 @@ class JokesViewModel : ViewModel() {
     val jokes: LiveData<Jokes>
         get() = _jokes
 
-    init {
-        fetchJokes(10, "twopart")
-    }
-
     fun fetchJokes(amount: Int, type: String) {
         viewModelScope.launch(Dispatchers.Main) {
         val jokes = JokesRepo.getJokes(amount, type)

@@ -1,14 +1,18 @@
 package com.example.countrieskotlin.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.countrieskotlin.databinding.CountryCardBinding
 import com.example.countrieskotlin.databinding.JokeCardBinding
 import com.example.countrieskotlin.model.Country
 import com.example.countrieskotlin.model.Joke
 import com.example.countrieskotlin.model.Jokes
+import com.example.countrieskotlin.view.JokeCardActivity
+import com.example.countrieskotlin.view.JokeCardTwoActivity
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 
 class JokesAdapter(private val jokes: Jokes) :
@@ -48,13 +52,12 @@ class JokesAdapter(private val jokes: Jokes) :
 
         private fun goToDetailActivity(joke: Joke) {
 
-//            Intent intent = new Intent(binding.getRoot().getContext(), DetailView.class);
-//
-//            intent.putExtra(Constants.INTENT_KEY_PHOTO_URL, photo.src.medium);
-//            intent.putExtra(Constants.INTENT_KEY_PHOTOGRAPHER, photo.photographer);
-//            intent.putExtra(Constants.INTENT_KEY_PHOTOGRAPHER_URL, photo.photographer_url);
-//
-//            binding.getRoot().getContext().startActivity(intent);
+            val intent = Intent(binding.root.context, JokeCardActivity::class.java)
+
+            intent.putExtra("SETUP", joke.setup)
+            intent.putExtra("DELIVERY", joke.delivery)
+
+            binding.root.context.startActivity(intent)
         }
 
     }

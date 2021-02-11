@@ -21,7 +21,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.MainActivity"/>
-        <activity android:name=".view.JokeListActivity"/>
+        <activity android:name=".view.JokeListActivity"
+            android:parentActivityName=".view.MainJokes">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.MainJokes" />
+        </activity>
+        <activity android:name=".view.JokeCardActivity"
+            android:parentActivityName=".view.JokeListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.JokeListActivity" />
+        </activity>
     </application>
-
 </manifest>

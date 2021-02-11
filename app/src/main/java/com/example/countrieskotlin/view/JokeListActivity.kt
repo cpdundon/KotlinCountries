@@ -32,11 +32,14 @@ class JokeListActivity : AppCompatActivity() {
             Toast.makeText(this, "List size is ${jokes.jokes?.size}", Toast.LENGTH_SHORT).show()
         }
 
-        setUpListeners()
+//        setUpListeners()
         setUpObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.fetchJokes(8,"twopart")
         setGridLayoutMgr(false)
-
     }
 
     private fun setUpListeners() {
@@ -68,11 +71,4 @@ class JokeListActivity : AppCompatActivity() {
             binding.rvJokeList.layoutManager = linearLayoutManager
         }
     }
-
-//    private fun reload() {
-//        var query: String
-//        var entered = (binding.etQuery as AppCompatEditText).text.toString().trim { it <= ' ' }
-//        if (entered == "") entered = "lighthouse"
-//        viewModel.fetchCountries(entered)
-//    }
 }
