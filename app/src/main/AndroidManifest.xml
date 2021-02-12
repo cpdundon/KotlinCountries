@@ -13,7 +13,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.CountriesKotlin">
-        <activity android:name=".view.MainJokes">
+        <activity android:name=".view.JokeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,12 +21,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.MainActivity"/>
-        <activity android:name=".view.JokeListActivity"
-            android:parentActivityName=".view.MainJokes">
+        <activity android:name=".view.MainJokes"
+            android:parentActivityName=".view.JokeListActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainJokes" />
+                android:value=".view.JokeListActivity" />
         </activity>
         <activity android:name=".view.JokeCardActivity"
             android:parentActivityName=".view.JokeListActivity">

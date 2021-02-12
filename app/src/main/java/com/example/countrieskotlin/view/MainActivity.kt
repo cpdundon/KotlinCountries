@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun reload() {
-        var query: String
         var entered = (binding.etQuery as AppCompatEditText).text.toString().trim { it <= ' ' }
         if (entered == "") entered = "lighthouse"
         viewModel.fetchCountries(entered)

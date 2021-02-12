@@ -34,9 +34,9 @@ class JokesViewModel : ViewModel() {
             _amount = 1
         }
 
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
         val jokes = JokesRepo.getJokes(_amount, type, category)
-            _jokes.value = jokes.body()
+            _jokes.postValue(jokes.body())
         }
     }
 }
