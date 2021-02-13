@@ -11,14 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.countrieskotlin.adapter.JokesAdapter
 import com.example.countrieskotlin.databinding.JokeListBinding
-import com.example.countrieskotlin.model.IntentInfo
-import com.example.countrieskotlin.model.IntentInfoSerializer
+import com.example.countrieskotlin.model.Intent.*
 import com.example.countrieskotlin.model.Jokes
 import com.example.countrieskotlin.nav.HideShowIconInterface
 import com.example.countrieskotlin.viewModel.JokesViewModel
-import com.squareup.moshi.JsonClass
-import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -36,8 +32,20 @@ class JokeListActivity : AppCompatActivity(), HideShowIconInterface {
             setContentView(it.root)
         }
 
-        val tst = Json.encodeToString(IntentInfo("TEST", "JokeCategories"))
-        val tObj = Json.decodeFromString<IntentInfo>(tst)
+        val myIntent = IntentInfo(Caller.mapCallerToDataObj(JokeList()), "JokeCategories")
+        val tst = Json.encodeToString(myIntent)
+        intent.putExtra(Caller.INTENT_KEY, tst)
+
+        var tObj: CallerType? = null
+        val categories: String
+        val rtnTst = intent.getStringExtra(Caller.INTENT_KEY)?: Caller.INTENT_DEFAULT
+
+        if (rtnTst != Caller.INTENT_DEFAULT) {
+            Json.decodeFromString<IntentInfo>(rtnTst).also {
+                tObj = Caller.mapDataObjToCaller(it.caller)
+                categories = it.categories
+            }
+        }
 
         viewModel.jokes.observe(this) { jokes ->
             Toast.makeText(this, "List size is ${jokes.jokes?.size}", Toast.LENGTH_SHORT).show()
