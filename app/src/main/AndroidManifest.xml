@@ -13,13 +13,17 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.CountriesKotlin">
-        <activity android:name=".view.JokeListActivity">
+        <activity android:name=".view.SplashActivity"
+                android:theme="@style/Theme.CountriesKotlin.Launcher">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.JobsActivity" />
+        <activity android:name=".view.JokeListActivity" />
         <activity android:name=".view.MainActivity"/>
         <activity android:name=".view.MainJokes"
             android:parentActivityName=".view.JokeListActivity">
