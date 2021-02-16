@@ -1,11 +1,15 @@
 package com.example.countrieskotlin.model.jobs
 
+import android.os.Parcelable
+import kotlinx.serialization.encodeToString
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
-@Serializable
+@Parcelize
 @JsonClass(generateAdapter = true)
-data class GitJob (
+data class GitJob   (
         val id: String,
         val type: String,
         val url: String,
@@ -17,4 +21,4 @@ data class GitJob (
         val description: String,
         val how_to_apply: String,
         val company_logo: String
-)
+) : Parcelable

@@ -1,61 +1,70 @@
 package com.example.countrieskotlin.adapter
 
+import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.example.countrieskotlin.R
 import com.example.countrieskotlin.databinding.JokeCardBinding
+import com.example.countrieskotlin.databinding.ShortJobCardBinding
 import com.example.countrieskotlin.model.Joke
 import com.example.countrieskotlin.model.Jokes
+import com.example.countrieskotlin.model.jobs.GitJob
+import com.example.countrieskotlin.view.JobQueryBuilder
+import com.example.countrieskotlin.view.JobsActivity
 import com.example.countrieskotlin.view.JokeCardActivity
+import com.example.countrieskotlin.viewModel.GitJobsViewModel
 
-class GitJobsAdapter(private val jokes: Jokes) :
-    RecyclerView.Adapter<GitJobsAdapter.JokesViewHolder>() {
+class GitJobsAdapter(private val jobs: List<GitJob>) :
+    RecyclerView.Adapter<GitJobsAdapter.GitJobsViewHolder>() {
+    lateinit var binding: ShortJobCardBinding
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JokesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GitJobsViewHolder {
 
-        val binding: JokeCardBinding = JokeCardBinding.inflate(
+        binding = ShortJobCardBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return JokesViewHolder(binding)
+        return GitJobsViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return jokes.jokes?.size?: 0
+        return jobs.size
     }
 
-    override fun onBindViewHolder(holder: JokesViewHolder, position: Int) {
-        if (jokes.jokes != null) {
-            val joke: Joke = jokes.jokes[position]
-            holder.setJoke(joke)
-        }
+    override fun onBindViewHolder(holder: GitJobsViewHolder, position: Int) {
+        val gitJob: GitJob = jobs[position]
+        holder.setJob(gitJob, position)
+        holder.itemView.setOnClickListener(View.OnClickListener { fragmentJump(gitJob) })
     }
 
-    class JokesViewHolder(private val binding: JokeCardBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun setJoke(joke: Joke) {
-            binding.tvSetup.text = joke.setup
-            setListeners(joke)
+    private fun fragmentJump(job: GitJob) {
+        val nextFrag = JobQueryBuilder()
+        val bundle = Bundle()
+        bundle.putParcelable("RV_ITEM", job)
+        nextFrag.arguments = bundle
+        switchContent(R.id.constraint_query_fragment, nextFrag)
+    }
+
+    private fun switchContent(id: Int, fragment: Fragment) {
+        val context = binding.root.context ?: return
+        if (context is JobsActivity) {
+            val jobsActivity = context as JobsActivity
+            jobsActivity.switchContent(id, fragment)
         }
 
-        private fun setListeners(joke: Joke) {
-            binding.tvSetup.setOnClickListener(View.OnClickListener { goToDetailActivity(joke) })
-            binding.tvSetup.setOnLongClickListener(View.OnLongClickListener {
-                binding.tvDelivery.text = joke.delivery
-                true }
-            )
-        }
+    }
 
-        private fun goToDetailActivity(joke: Joke) {
-
-            val intent = Intent(binding.root.context, JokeCardActivity::class.java)
-
-            intent.putExtra("SETUP", joke.setup)
-            intent.putExtra("DELIVERY", joke.delivery)
-
-            binding.root.context.startActivity(intent)
+    class GitJobsViewHolder(private val binding: ShortJobCardBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun setJob(gitJob: GitJob, position: Int) {
+            binding.tvCompany.text = gitJob.company
         }
 
     }

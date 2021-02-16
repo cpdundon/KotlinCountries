@@ -1,41 +1,46 @@
 package com.example.countrieskotlin.view
 
-import android.graphics.Typeface
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import com.example.countrieskotlin.R
 import com.example.countrieskotlin.databinding.JobsFragmentHolderBinding
+import com.example.countrieskotlin.model.jobs.GitJob
 import com.example.countrieskotlin.viewModel.GitJobsViewModel
 
 class JobsActivity : AppCompatActivity() {
+    lateinit var binding : JobsFragmentHolderBinding
     private val viewModel by viewModels<GitJobsViewModel>()
-
-    private lateinit var binding: JobsFragmentHolderBinding
+    private lateinit var jobs: List<GitJob>
+    private lateinit var jobLocation : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = JobsFragmentHolderBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
+        loadFragment()
 
-        setUpListeners()
-        setUpObservers()
-
-    }
-
-    private fun setUpListeners() {
-        binding.btnFetch.setOnClickListener(View.OnClickListener {
-            viewModel.fetchJobs("Python", "New York")
-            true
+        //TODO: Get the description from the fragment
+        viewModel.jobs.observe(this, Observer<List<GitJob>> {
+            it
+            jobs = it
         })
+
+    }
+    private fun loadFragment() {
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.jobs_container, JobQueryBuilder.newInstance(), "SearchFragment")
+            .commit()
     }
 
-    private fun setUpObservers() {
-        viewModel.jobs.observe(this) { jobsList ->
-            if (jobsList != null) Toast.makeText(this, "List size is ${jobsList.size}", Toast.LENGTH_LONG).show()
-        }
+    public fun switchContent(id: Int, fragment: Fragment) {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(id, fragment, fragment.toString())
+        ft.addToBackStack(null)
+        ft.commit()
     }
-
 }

@@ -4,12 +4,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_fetch"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/jobs_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Fetch Jobs"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
